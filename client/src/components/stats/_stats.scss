@@ -1,0 +1,347 @@
+.profileStats {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem 1.5rem;
+  background: #fff;
+  color: $dark-color;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  &__heading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+
+    &--userName {
+      height: auto;
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      letter-spacing: 0.15rem;
+      font-weight: 700;
+      z-index: 1;
+    }
+
+    &--dateLastPlayed {
+      margin-top: 0.3rem;
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+
+      & span {
+        text-transform: uppercase;
+        color: darken($light-color, 25%);
+        margin-right: 0.3rem;
+      }
+    }
+  }
+
+  &__platform {
+    font-size: 3rem;
+    color: rgba($dark-color, 0.7);
+    z-index: 0;
+  }
+}
+
+@include media-md {
+  .profileStats {
+    &__heading {
+      &--userName {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+.statsSection {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+
+  .statsDisplay {
+    margin-left: auto;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: $light-color;
+    border-bottom: 2px solid $accent-color;
+    text-transform: uppercase;
+    padding: 0.2rem;
+    cursor: pointer;
+  }
+}
+
+.statsHeader {
+  max-width: 600px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  color: $light-color;
+  font-weight: 200;
+  max-width: 600px;
+  text-align: left;
+}
+
+.profileHighlights {
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.5rem;
+
+  &__box {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    max-height: 200px;
+    padding: 0.2rem;
+    background: #fff;
+    color: $dark-color;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+  }
+
+  .statBox__icon {
+    position: absolute;
+    width: auto;
+    height: 70%;
+    max-height: 70%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    opacity: 0.1;
+    filter: invert(100%);
+  }
+
+  .statBox__header {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: darken($light-color, 40%);
+    text-align: center;
+  }
+
+  .statBox__text {
+    font-size: 1.2rem;
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  .statBox__pvp {
+    border-left: 8px solid lighten($pvp-color, 15%);
+  }
+
+  .statBox__raid {
+    border-left: 8px solid lighten($raid-color, 15%);
+  }
+
+  .statBox__PvE {
+    border-left: 8px solid lighten($pve-color, 15%);
+  }
+
+  .statBox__strikes {
+    border-left: 8px solid lighten($strikes-color, 15%);
+  }
+
+  .statBox__gambit {
+    border-left: 8px solid lighten($gambit-color, 15%);
+  }
+
+  .statBox__general {
+    border-left: 8px solid lighten($general-color, 15%);
+  }
+}
+
+@include media-md {
+  .profileHighlights {
+    &__box {
+      padding: 0.4rem;
+    }
+    .statBox__header {
+      font-size: 0.9rem;
+    }
+
+    .statBox__text {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+.characters {
+  width: 100%;
+  max-width: 600px;
+
+  .character {
+    margin-bottom: 0.3rem;
+    position: relative;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &__emblem {
+      width: 100%;
+    }
+
+    &__class {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      margin-left: 20%;
+      height: 100%;
+      justify-content: center;
+
+      &--classType {
+        margin-top: -0.3rem;
+        font-size: 1.2rem;
+        @include text-stroke;
+      }
+    }
+
+    &__raceAndGender {
+      margin-top: 0.2rem;
+
+      &--genderType,
+      &--raceType {
+        color: darken($light-color, 25%);
+        @include text-stroke;
+      }
+
+      &--genderType {
+        margin-left: 0.3rem;
+      }
+    }
+
+    &__power {
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      margin-right: 4%;
+      height: 100%;
+      justify-content: center;
+
+      &--power {
+        margin-top: -0.3rem;
+        font-size: 1.2rem;
+        color: rgb(54, 199, 209);
+        @include text-stroke;
+
+        &::before {
+          content: '\2727';
+          font-size: 0.8rem;
+          vertical-align: top;
+          margin-right: 0.1rem;
+        }
+      }
+
+      &--level {
+        margin-top: 0.2rem;
+        @include text-stroke;
+      }
+    }
+  }
+}
+
+@include media-md {
+  .characters {
+    .character {
+      font-size: 1.2rem;
+      &__class {
+        &--classType {
+          font-size: 1.8rem;
+        }
+      }
+      &__power {
+        &--power {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
+}
+
+.stats {
+  width: 100%;
+
+  &__heading {
+    width: 100%;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 200;
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  .pvpStatsGroup {
+    border-left: 8px solid lighten($pvp-color, 15%);
+  }
+
+  .pveStatsGroup {
+    border-left: 8px solid lighten($pve-color, 15%);
+  }
+
+  .gambitStatsGroup {
+    border-left: 8px solid lighten($gambit-color, 15%);
+  }
+
+  .statsGroup {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background: #fff;
+    color: $dark-color;
+
+    & div:nth-of-type(odd) {
+      background: $light-color;
+    }
+
+    &__row {
+      display: flex;
+      align-items: center;
+      padding: 0.3rem 0.5rem;
+
+      &--label {
+        text-align: left;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        color: darken($light-color, 45%);
+      }
+
+      &--value {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+@include media-md {
+  .stats {
+    .statsGroup {
+      font-size: 1.2rem;
+      &__row {
+        &--label {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.errors__profile-fetch {
+  display: block;
+  background: $error-color;
+  color: $light-color;
+  border: lighten($error-color, 20%);
+  padding: 0.5rem;
+
+  & span {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: darken($light-color, 15%);
+  }
+}

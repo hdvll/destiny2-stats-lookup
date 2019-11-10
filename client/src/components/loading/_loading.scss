@@ -1,0 +1,35 @@
+.searching-spinner {
+  background: #fff;
+  border-radius: 3px;
+  padding: 2rem 1rem;
+  color: $dark-color;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & i {
+    font-size: 4rem;
+    color: darken($light-color, 40%);
+  }
+
+  & span {
+    margin-top: 1rem;
+    font-size: 1rem;
+    text-align: center;
+    color: darken($light-color, 40%);
+  }
+}
+
+.spinner-animate {
+  animation: rotation 2s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

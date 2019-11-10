@@ -1,0 +1,40 @@
+// FONT IMPORTS
+@import url('https://fonts.googleapis.com/css?family=Oswald:200,400,700&display=swap');
+// font-family: 'Oswald', sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap');
+// font-family: 'Roboto', sans-serif;
+
+// COLORS
+$dark-color: #333;
+$light-color: #f0f0f0;
+$accent-color: #6ab1bb;
+$secondary-color: #742624;
+$error-color: #d84040;
+$pvp-color: #421212;
+$pve-color: #19757c;
+$strikes-color: #23548b;
+$raid-color: #161616;
+$gambit-color: #114117;
+$general-color: #382b3f;
+
+// RESETS
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Mixins
+@mixin text-stroke {
+  text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333,
+    1px 1px 0 #333;
+}
+
+/* Media query mixins */
+@mixin media-md {
+  @media (min-width: 600px) {
+    @content;
+  }
+}

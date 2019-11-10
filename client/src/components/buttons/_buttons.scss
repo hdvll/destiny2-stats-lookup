@@ -1,0 +1,21 @@
+.goBackButton,
+.clearSearchResults {
+  max-width: 600px;
+  width: 100%;
+  margin: 2rem 0;
+  border-top: 1px solid $accent-color;
+
+  &__button {
+    margin-top: 2rem;
+    padding: 0.5rem 1rem;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    background: darken($accent-color, 20%);
+    border: 2px solid $light-color;
+    color: $light-color;
+    border-radius: 3px;
+    font-weight: 200;
+    width: 100%;
+  }
+}

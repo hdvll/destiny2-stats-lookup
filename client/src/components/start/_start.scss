@@ -1,0 +1,15 @@
+.aboutTheSite {
+  margin-top: 3rem;
+  width: 100%;
+  text-align: center;
+
+  .mainLink,
+  .mainLink:active,
+  .mainLink:visited {
+    color: darken($light-color, 50%);
+  }
+
+  .mainLink:hover {
+    color: $accent-color;
+  }
+}

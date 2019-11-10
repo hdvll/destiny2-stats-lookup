@@ -1,0 +1,43 @@
+.about {
+  margin-top: 1rem;
+  background: #fff;
+  padding: 1rem;
+  color: $dark-color;
+  border-radius: 3px;
+
+  &__header {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  & p {
+    margin-bottom: 1rem;
+    line-height: 1.4;
+
+    & span {
+      font-size: 1.3rem;
+      margin-left: 0.3rem;
+      color: red;
+    }
+  }
+
+  & p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .aboutLink,
+  .aboutLink:active,
+  .aboutLink:visited {
+    color: $accent-color;
+    font-weight: 700;
+  }
+}
+
+@include media-md {
+  .about {
+    padding: 3rem;
+  }
+}
