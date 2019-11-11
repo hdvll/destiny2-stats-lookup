@@ -2,6 +2,10 @@
 
 Destiny 2 Stats Lookup is a lightweight stats checker for Bungie's shared world shooter, Destiny 2. The site uses Bungie's public API to fetch player stats. More information about the API can be found at Bungie's [Github page](https://github.com/Bungie-net/api).
 
+### WEBSITE
+
+You can find and try the website out at [d2stats.hdvll.com](https://d2stats.hdvll.com)
+
 ### TECH
 
 This site is coded with React, Node.js and Express
