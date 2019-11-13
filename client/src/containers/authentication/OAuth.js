@@ -18,29 +18,11 @@ const OAuth = ({ location }) => {
 
   useEffect(() => {
     if (!oAuthToken) {
-      console.log('No OAuth token... looking for callback data...');
       if (sessionStorage.getItem('OAuthState') && query.code) {
-        console.log('Callback data exist... getting authentication data...');
         // Get and store the access token
         getAuthToken();
       } else {
-        console.log('No callback data exist... redirecting...');
         redirectForAuth();
-      }
-    } else {
-      if (!membershipData) {
-        console.log(
-          'Membership data does not exist exists... looking for token expiry...'
-        );
-        if (OAuthExpiry > Math.floor(Date.now() / 1000)) {
-          console.log('Token is not expired... fetching membership data...');
-          // Token is not expired. Go ahead and fetch data from Bungie if none exist
-          getD2MembershipData();
-        } else {
-          console.log('Token is expired. Removing old session data...');
-          // sessionStorage.removeItem('OAuthToken');
-          // sessionStorage.removeItem('OAuthExpiry');
-        }
       }
     }
   }, [oAuthToken, setOAuthExpiry]);
