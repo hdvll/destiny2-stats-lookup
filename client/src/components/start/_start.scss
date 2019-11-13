@@ -13,3 +13,22 @@
     color: $accent-color;
   }
 }
+
+.divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__line {
+    width: 30%;
+    height: 1px;
+    background: $accent-color;
+  }
+
+  &__text {
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 1rem 0.5rem;
+    text-align: center;
+  }
+}

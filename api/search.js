@@ -43,5 +43,3 @@ router.get('/:searchTerm', async (req, res) => {
 });
 
 module.exports = router;
-
-// https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType

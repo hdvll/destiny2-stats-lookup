@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const SearchBar = ({
@@ -31,11 +30,6 @@ const SearchBar = ({
             <i className='fas fa-spinner spinner-animate' />
           )}
         </div>
-      </div>
-      <div className='aboutTheSite'>
-        <Link to='/about' className='mainLink'>
-          About the site
-        </Link>
       </div>
     </form>
   );
