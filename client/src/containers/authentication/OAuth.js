@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import qs from 'query-string';
 import axios from 'axios';
 
 const OAuth = ({ location }) => {
-  const query = qs.parse(location.search);
+  const timeNow = Math.floor(Date.now() / 1000);
 
   const [membershipData, setMembershipData] = useState(
     JSON.parse(sessionStorage.getItem('OAuthMemberShipData'))
@@ -15,17 +14,24 @@ const OAuth = ({ location }) => {
   const [OAuthExpiry, setOAuthExpiry] = useState(
     JSON.parse(sessionStorage.getItem('OAuthExpiry'))
   );
+  const [OAuthError, setOAuthError] = useState(
+    JSON.parse(sessionStorage.getItem('OAuthError'))
+  );
 
   useEffect(() => {
     if (!oAuthToken) {
-      if (sessionStorage.getItem('OAuthState') && query.code) {
-        // Get and store the access token
-        getAuthToken();
+      redirectForAuth();
+    } else {
+      if (OAuthExpiry < timeNow) {
+        // Token is expired...
+        console.log('Access token has expired.');
+        sessionStorage.setItem('OAuthError', 'Access token has expired.');
+        sessionStorage.removeItem('OAuthToken');
       } else {
-        redirectForAuth();
+        getD2MembershipData(oAuthToken.access_token);
       }
     }
-  }, [oAuthToken, setOAuthExpiry]);
+  }, [oAuthToken, membershipData]);
 
   // Redirection to Bungie.net for authentication
   const redirectForAuth = () => {
@@ -44,35 +50,6 @@ const OAuth = ({ location }) => {
         );
       })
       .catch(err => console.error(err));
-  };
-
-  // Fetches the OAuth token from the server and stores it in session storage and state
-  const getAuthToken = () => {
-    axios
-      .get(`/api/oauth/getOAuthToken/${query.code}`)
-      .then(result => {
-        sessionStorage.setItem('OAuthToken', JSON.stringify(result.data));
-        sessionStorage.setItem(
-          'OAuthExpiry',
-          Math.floor(Date.now() / 1000) + parseInt(result.data.expires_in)
-        );
-        setOAuthToken(result.data);
-        setOAuthExpiry(
-          Math.floor(Date.now() / 1000) + parseInt(result.data.expires_in)
-        );
-        getD2MembershipData(result.data.access_token);
-      })
-      .catch(err => {
-        if (
-          err.response.status === 400 &&
-          err.response.data.msg.error === 'invalid_grant'
-        ) {
-          sessionStorage.removeItem('OAuthState');
-        }
-
-        console.error(err);
-      });
-    return null;
   };
 
   // Fetches Destiny membership data based on the access token of the authentiated user

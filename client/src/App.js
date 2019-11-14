@@ -4,6 +4,7 @@ import Start from './components/start/Start';
 import StatsContainer from './containers/stats/StatsContainer';
 import About from './components/about/About';
 import OAuth from './containers/authentication/OAuth';
+import Callback from './containers/authentication/Callback';
 
 function App() {
   // Set display names for the various platforms
@@ -47,6 +48,7 @@ function App() {
         />
         <Route exact path='/about' component={About} />
         <Route exact path='/oauth' component={OAuth} />
+        <Route exact path='/callback' component={Callback} />
       </Switch>
     </Router>
   );

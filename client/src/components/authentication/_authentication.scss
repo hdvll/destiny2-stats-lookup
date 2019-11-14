@@ -16,3 +16,13 @@
     border: 1px solid darken($dark-color, 5%);
   }
 }
+
+.errorLink {
+  color: darken($light-color, 25%);
+  font-weight: 700;
+
+  &:hover,
+  &:focus {
+    color: $accent-color;
+  }
+}
