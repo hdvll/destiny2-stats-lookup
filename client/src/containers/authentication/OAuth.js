@@ -55,15 +55,13 @@ const OAuth = ({ location }) => {
   // Fetches Destiny membership data based on the access token of the authentiated user
   const getD2MembershipData = access_token => {
     if (!membershipData) {
-      // Create headers with access_token
-      const config = {
-        headers: {
-          access_token
-        }
-      };
-
+      const { access_token } = JSON.parse(sessionStorage.getItem('OAuthToken'));
       axios
-        .get('/api/oauth/getMemberShipData', config)
+        .get('/api/oauth/getMemberShipData', {
+          headers: {
+            accesstoken: access_token
+          }
+        })
         .then(result => {
           sessionStorage.setItem(
             'OAuthMemberShipData',
