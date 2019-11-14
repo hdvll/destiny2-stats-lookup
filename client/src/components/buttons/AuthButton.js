@@ -2,6 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Button = ({ location }) => {
+  // Deletes all OAuth data from sessionStorage
+  const deleteSessionData = () => {
+    sessionStorage.removeItem('OAuthToken');
+    sessionStorage.removeItem('OAuthState');
+    sessionStorage.removeItem('OAuthMemberShipData');
+    sessionStorage.removeItem('OAuthExpiry');
+    sessionStorage.removeItem('OAuthError');
+  };
+
   const goToAuth = () => {
     return window.location.replace('/oauth');
   };
@@ -23,10 +32,7 @@ const Button = ({ location }) => {
   ) : (
     <div style={{ fontStyle: 'italic', textAlign: 'center' }}>
       Error: {error}{' '}
-      <Link
-        onClick={() => sessionStorage.removeItem('OAuthError')}
-        className='errorLink'
-      >
+      <Link onClick={() => deleteSessionData()} className='errorLink'>
         Try again
       </Link>
     </div>

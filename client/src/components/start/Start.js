@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchBarContainer from '../../containers/search/SearchBarContainer';
 import Heading from '../heading/Heading';
-import AuthButton from '../authentication/Button';
+import AuthButton from '../buttons/AuthButton';
 
 const Start = ({ getSearchResults, platformDisplayName }) => {
   return (
