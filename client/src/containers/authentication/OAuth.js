@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import axios from 'axios';
 
 const OAuth = ({ location }) => {
-  const timeNow = Math.floor(Date.now() / 1000);
+  const cookies = new Cookies();
 
   const [membershipData, setMembershipData] = useState(
     JSON.parse(sessionStorage.getItem('OAuthMemberShipData'))
   );
   const [oAuthToken, setOAuthToken] = useState(
-    JSON.parse(sessionStorage.getItem('OAuthToken'))
-  );
-  const [OAuthExpiry, setOAuthExpiry] = useState(
-    JSON.parse(sessionStorage.getItem('OAuthExpiry'))
+    cookies.get('bungieAuth') ? cookies.get('bungieAuth') : null
   );
   const [OAuthError, setOAuthError] = useState(
     JSON.parse(sessionStorage.getItem('OAuthError'))
@@ -22,16 +20,9 @@ const OAuth = ({ location }) => {
     if (!oAuthToken) {
       redirectForAuth();
     } else {
-      if (OAuthExpiry < timeNow) {
-        // Token is expired...
-        console.log('Access token has expired.');
-        sessionStorage.setItem('OAuthError', 'Access token has expired.');
-        sessionStorage.removeItem('OAuthToken');
-      } else {
-        getD2MembershipData(oAuthToken.access_token);
-      }
+      getD2MembershipData();
     }
-  }, [oAuthToken, membershipData]);
+  }, [oAuthToken, membershipData]); // Do not add getD2MembershipData. It will break the app.
 
   // Redirection to Bungie.net for authentication
   const redirectForAuth = () => {
@@ -49,19 +40,18 @@ const OAuth = ({ location }) => {
           `${oAuthURI}?client_id=${clientId}&response_type=${responseType}&state=${state}`
         );
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+        sessionStorage.settItem('OAuthError', 'Authentication error.');
+        setOAuthError('Authentication error.');
+      });
   };
 
   // Fetches Destiny membership data based on the access token of the authentiated user
-  const getD2MembershipData = access_token => {
+  const getD2MembershipData = token => {
     if (!membershipData) {
-      const { access_token } = JSON.parse(sessionStorage.getItem('OAuthToken'));
       axios
-        .get('/api/oauth/getMemberShipData', {
-          headers: {
-            accesstoken: access_token
-          }
-        })
+        .get('/api/oauth/getMemberShipData')
         .then(result => {
           sessionStorage.setItem(
             'OAuthMemberShipData',
@@ -69,12 +59,20 @@ const OAuth = ({ location }) => {
           );
           setMembershipData(result.data);
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+          console.error(err);
+          sessionStorage.settItem(
+            'OAuthError',
+            'Error getting membership data.'
+          );
+          setOAuthError('Error getting membership data.');
+        });
     }
   };
 
   return (
-    membershipData && (
+    membershipData &&
+    !OAuthError && (
       <Redirect
         to={`/stats/${membershipData.membershipType}/${membershipData.membershipId}`}
       />

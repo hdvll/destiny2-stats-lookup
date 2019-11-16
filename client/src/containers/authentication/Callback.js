@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 import qs from 'query-string';
 
 const Callback = ({ location }) => {
-  const timeNow = Math.floor(Date.now() / 1000);
+  const cookies = new Cookies();
   const query = qs.parse(location.search);
-  const state = sessionStorage.getItem('OAuthState');
+  const oAuthState = sessionStorage.getItem('OAuthState');
 
   useEffect(() => {
     // Check that callback contains code and that state matches
@@ -17,25 +18,28 @@ const Callback = ({ location }) => {
       return window.location.replace('/');
     }
 
-    if (state !== query.state) {
+    if (oAuthState !== query.state) {
       sessionStorage.setItem('OAuthError', 'State does not match.');
       return window.location.replace('/');
+    } else {
+      sessionStorage.removeItem('OAuthState');
     }
 
     getAuthToken();
-  }, []);
+  }, [query.code, query.state, oAuthState]);
 
   const getAuthToken = () => {
     // Fetches the OAuth token from the server and stores it in session storage and state
     axios
       .get(`/api/oauth/getOAuthToken/${query.code}`)
       .then(result => {
-        sessionStorage.setItem('OAuthToken', JSON.stringify(result.data));
-        sessionStorage.setItem(
-          'OAuthExpiry',
-          timeNow + parseInt(result.data.expires_in)
-        );
-        return window.location.replace('/oauth');
+        if (cookies.get('bungieAuth')) {
+          return window.location.replace('/oauth');
+        } else {
+          sessionStorage.setItem('OAuthError', 'Authentication error.');
+          cookies.remove('bungieAuth');
+          return window.location.replace('/');
+        }
       })
       .catch(err => {
         if (
@@ -44,6 +48,7 @@ const Callback = ({ location }) => {
         ) {
           sessionStorage.setItem('OAuthError', 'Invalid OAuth.');
           sessionStorage.removeItem('OAuthState');
+          cookies.remove('bungieAuth');
           return window.location.replace('/');
         }
         console.error(err.response);

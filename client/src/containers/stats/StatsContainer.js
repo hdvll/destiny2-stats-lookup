@@ -3,11 +3,9 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Heading from '../../components/heading/Heading';
 import LoadingData from '../../components/loading/LoadingData';
-import BackToRoot from '../../components/buttons/BackToRoot';
 import ProfileFetchError from '../../components/errors/ProfileFetchError';
 import ProfileStats from '../../components/stats/ProfileStats';
 import ProfileHighlights from '../../components/stats/ProfileHighlights';
-import Characters from '../../components/stats/Characters';
 import PvPStats from '../../components/stats/PvPStats';
 import PvEStats from '../../components/stats/PvEStats';
 import GambitStats from '../../components/stats/GambitStats';
@@ -107,11 +105,16 @@ const StatsContainer = ({ match, platformDisplayName }) => {
             <ProfileStats
               profile={profile}
               platformDisplayName={platformDisplayName}
+              characters={characters}
             />
             <ProfileHighlights profile={profile} profileStats={profileStats} />
-            <Characters characters={characters} />
             <PvPStats allPvP={profileStats.allPvP} />
-            <PvEStats allPvE={profileStats.allPvE} />
+            <PvEStats
+              allPvE={profileStats.allPvE}
+              allStrikes={profileStats.allStrikes}
+              patrol={profileStats.patrol}
+              story={profileStats.story}
+            />
             <GambitStats allPvECompetitive={profileStats.allPvECompetitive} />
           </>
         ) : (
@@ -123,7 +126,6 @@ const StatsContainer = ({ match, platformDisplayName }) => {
           platform={match.params.membershipType}
         />
       )}
-      <BackToRoot text='Back to search results' />
     </div>
   );
 };

@@ -8,7 +8,7 @@
 $dark-color: #333;
 $light-color: #f0f0f0;
 $accent-color: #6ab1bb;
-$secondary-color: #742624;
+$secondary-color: #1e2632;
 $error-color: #d84040;
 $pvp-color: #421212;
 $pve-color: #19757c;
@@ -37,4 +37,15 @@ $general-color: #382b3f;
   @media (min-width: 600px) {
     @content;
   }
+}
+
+/* Media query mixins */
+@mixin media-lg {
+  @media (min-width: 1010px) {
+    @content;
+  }
+}
+
+@mixin transition-ease {
+  transition: color 0.4s ease-in-out;
 }

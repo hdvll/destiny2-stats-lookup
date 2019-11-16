@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Heading from '../heading/Heading';
-import BackToRoot from '../buttons/BackToRoot';
 
 const About = props => {
   return (
@@ -64,7 +63,6 @@ const About = props => {
           your own or other's stats.
         </p>
       </div>
-      <BackToRoot text='Back to search' />
     </div>
   );
 };

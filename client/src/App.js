@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import Start from './components/start/Start';
 import StatsContainer from './containers/stats/StatsContainer';
 import About from './components/about/About';
 import OAuth from './containers/authentication/OAuth';
 import Callback from './containers/authentication/Callback';
+import Menu from './components/menu/Menu';
 
 function App() {
+  const cookies = new Cookies();
+
+  const [authCookie, setAuthCookie] = useState(cookies.get('bungieAuth'));
+
   // Set display names for the various platforms
   const platformDisplayName = platformNum => {
     let platformName;
@@ -26,14 +32,33 @@ function App() {
     return platformName;
   };
 
+  // Deletes all OAuth data from sessionStorage
+  const deleteSessionData = () => {
+    if (authCookie) {
+      cookies.remove('bungieAuth', { path: '/' });
+      setAuthCookie(null);
+    }
+    sessionStorage.removeItem('OAuthToken');
+    sessionStorage.removeItem('OAuthState');
+    sessionStorage.removeItem('OAuthMemberShipData');
+    sessionStorage.removeItem('OAuthExpiry');
+    sessionStorage.removeItem('OAuthError');
+    return window.location.replace('/');
+  };
+
   return (
     <Router>
+      <Menu deleteSessionData={deleteSessionData} />
       <Switch>
         <Route
           exact
           path='/'
           render={props => (
-            <Start {...props} platformDisplayName={platformDisplayName} />
+            <Start
+              {...props}
+              platformDisplayName={platformDisplayName}
+              deleteSessionData={deleteSessionData}
+            />
           )}
         />
         <Route

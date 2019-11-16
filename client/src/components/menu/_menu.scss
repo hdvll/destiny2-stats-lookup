@@ -1,0 +1,173 @@
+nav {
+  overflow-x: hidden;
+
+  .menu {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    transform: translateX(-100%);
+    background: $light-color;
+    color: $dark-color;
+    transition: transform 0.3s ease-in-out;
+    z-index: 99;
+
+    &.open {
+      transform: translateX(0);
+    }
+
+    &__divider {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      &--line {
+        width: 90%;
+        height: 1px;
+        background: $accent-color;
+      }
+    }
+
+    &__navBtn {
+      height: 3rem;
+      position: absolute;
+      right: 0;
+      top: 1.5rem;
+      background: $light-color;
+      border: none;
+      font-family: sans-serif;
+      transform: translateX(100%);
+      color: $dark-color;
+      padding: 0.3rem;
+      border-radius: 0 4px 4px 0px;
+
+      &:focus {
+        outline: none;
+      }
+
+      &--hamburger {
+        position: relative;
+        display: block;
+        background: $accent-color;
+        height: 0.2rem;
+        width: 2rem;
+        transition: transform 300ms ease-in;
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          display: block;
+          height: 0.2rem;
+          width: 2rem;
+        }
+
+        &::before {
+          content: '';
+          top: -0.5rem;
+          background: $dark-color;
+        }
+
+        &::after {
+          content: '';
+          top: 0.5rem;
+          background: $secondary-color;
+          transition: transform 300ms ease-in;
+        }
+      }
+    }
+
+    &__heading {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      text-align: center;
+      text-transform: uppercase;
+      line-height: 1.1em;
+      margin: 1.7rem 0;
+      padding-bottom: 0.3rem;
+      color: $dark-color;
+
+      &--d2 {
+        letter-spacing: 0.65rem;
+        margin-left: 0.6rem;
+        font-weight: 100;
+      }
+
+      &--text {
+        letter-spacing: 0.15rem;
+      }
+    }
+
+    &__list {
+      margin-top: 2rem;
+      width: 80vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      list-style: none;
+      font-size: 1rem;
+
+      &--top {
+        width: 100%;
+        padding: 0 2rem;
+      }
+
+      &--item {
+        margin-top: 1rem;
+        padding: 0 0.5rem 1rem 0.5rem;
+        border-bottom: 1px solid darken($light-color, 10%);
+
+        &:first-of-type {
+          margin-top: 0;
+        }
+      }
+
+      &--bottom {
+        width: 100%;
+        position: absolute;
+        bottom: 2rem;
+        left: 0;
+        padding: 0 2rem;
+        margin-left: 0;
+      }
+
+      .navLink {
+        color: darken($light-color, 40%);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+
+        & i {
+          margin-right: 0.7rem;
+        }
+
+        &:hover {
+          color: $dark-color;
+        }
+      }
+    }
+
+    @include media-md {
+      .menu__list {
+        width: 400px;
+        font-size: 1.2rem;
+      }
+
+      .navLink i {
+        font-size: 150%;
+      }
+    }
+  }
+}
+
+// Menu hamburger animation
+.open .menu__navBtn--hamburger {
+  transform: rotate(585deg);
+}
+
+.open .menu__navBtn--hamburger::after {
+  transform: rotate(90deg) translate(-8px);
+}
+
+.open .menu__navBtn--hamburger::before {
+  opacity: 0;
+}

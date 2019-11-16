@@ -1,10 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import SearchBarContainer from '../../containers/search/SearchBarContainer';
 import Heading from '../heading/Heading';
 import AuthButton from '../buttons/AuthButton';
 
-const Start = ({ getSearchResults, platformDisplayName }) => {
+const Start = ({
+  getSearchResults,
+  platformDisplayName,
+  deleteSessionData
+}) => {
   return (
     <>
       <div className='container'>
@@ -18,12 +21,7 @@ const Start = ({ getSearchResults, platformDisplayName }) => {
           <span className='divider__text'>OR</span>
           <span className='divider__line'></span>
         </div>
-        <AuthButton />
-        <div className='aboutTheSite'>
-          <Link to='/about' className='mainLink'>
-            About the site
-          </Link>
-        </div>
+        <AuthButton deleteSessionData={deleteSessionData} />
       </div>
     </>
   );

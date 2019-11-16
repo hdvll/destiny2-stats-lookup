@@ -75,19 +75,31 @@ router.get('/getOAuthToken/:code', async (req, res) => {
 
       await axios
         .post(tokenURI, qs.stringify(body), config)
-        .then(result => res.json(result.data))
+        // .then(result => res.json(result.data))
+        .then(result => {
+          // Create cookie options
+          const cookieOptions = {
+            maxAge: result.data.expires_in * 1000,
+            // maxAge: 10000, // For testing only
+            httpOnly: false
+          };
+          res
+            .cookie('bungieAuth', result.data.access_token, cookieOptions)
+            .json({ msg: 'Cookie set' });
+        })
         .catch(err => {
-          if (err.response.status) {
-            return res.status(err.response.status).json({
-              status: err.response.status,
-              msg: err.response.data
-            });
-          }
-          return res.json(err);
+          // if (err.response.status) {
+          //   return res.status(err.response.status).json({
+          //     status: err.response.status,
+          //     msg: err.response.data
+          //   });
+          // }
+          console.error(err);
+          // return res.json(err);
         });
     }
   } catch (error) {
-    console.error(err);
+    console.error(error);
     res.status(500).send('Server error');
   }
 });
@@ -97,38 +109,43 @@ router.get('/getOAuthToken/:code', async (req, res) => {
 // This route returns an object of the membershipType, membershipId and Displayname. The client
 // can use these in the same way it uses the data from the search results.
 router.get('/getMemberShipData', async (req, res) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${req.headers.accesstoken}`,
-        'x-api-key': process.env.API_Key
-      }
-    };
-
-    const membershipURI = `${process.env.API_Base_URL}/User/GetMembershipsForCurrentUser/`;
-
-    await axios
-      .get(membershipURI, config)
-      .then(result =>
-        res.json({
-          membershipId: result.data.Response.destinyMemberships[0].membershipId,
-          membershipType:
-            result.data.Response.destinyMemberships[0].membershipType,
-          displayName: result.data.Response.destinyMemberships[0].displayName
-        })
-      )
-      .catch(err => {
-        if (err.response.status) {
-          return res.status(err.response.status).json({
-            status: err.response.status,
-            msg: err.response.data
-          });
+  if (req.universalCookies.get('bungieAuth')) {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${req.universalCookies.get('bungieAuth')}`,
+          'x-api-key': process.env.API_Key
         }
-        return res.json(err);
-      });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
+      };
+
+      const membershipURI = `${process.env.API_Base_URL}/User/GetMembershipsForCurrentUser/`;
+
+      await axios
+        .get(membershipURI, config)
+        .then(result =>
+          res.json({
+            membershipId:
+              result.data.Response.destinyMemberships[0].membershipId,
+            membershipType:
+              result.data.Response.destinyMemberships[0].membershipType,
+            displayName: result.data.Response.destinyMemberships[0].displayName
+          })
+        )
+        .catch(err => {
+          if (err.response.status) {
+            return res.status(err.response.status).json({
+              status: err.response.status,
+              msg: err.response.data
+            });
+          }
+          return res.json(err);
+        });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
+    }
+  } else {
+    res.status(401).json({ error: { msg: 'Authentication token not found' } });
   }
 });
 

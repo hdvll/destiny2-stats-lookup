@@ -46,7 +46,6 @@ const Characters = ({ characters }) => {
 
   return (
     <>
-      <div className='statsHeader'>Characters</div>
       <div className='characters'>
         {charArr.map(character => (
           <div className='character' key={character.characterId}>

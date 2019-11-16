@@ -1,47 +1,182 @@
-.profileStats {
-  width: 100%;
-  max-width: 600px;
-  padding: 2rem 1.5rem;
+.profile {
   background: #fff;
-  color: $dark-color;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
 
-  &__heading {
+  .profileStats {
     width: 100%;
+    max-width: 600px;
+    background: #fff;
+    color: $dark-color;
     display: flex;
-    flex-direction: column;
-    z-index: 1;
+    align-items: center;
 
-    &--userName {
-      height: auto;
+    &__heading {
+      width: 100%;
       display: flex;
-      align-items: center;
-      font-size: 1.5rem;
-      letter-spacing: 0.15rem;
-      font-weight: 700;
+      flex-direction: column;
       z-index: 1;
+
+      &--userName {
+        height: auto;
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem;
+        letter-spacing: 0.15rem;
+        font-weight: 700;
+        z-index: 1;
+      }
+
+      &--dateLastPlayed {
+        margin-top: 0.3rem;
+        display: flex;
+        align-items: center;
+        font-size: 0.8rem;
+
+        & span {
+          text-transform: uppercase;
+          color: darken($light-color, 25%);
+          margin-right: 0.3rem;
+        }
+      }
     }
 
-    &--dateLastPlayed {
-      margin-top: 0.3rem;
-      display: flex;
-      align-items: center;
-      font-size: 0.8rem;
+    &__platform {
+      font-size: 3rem;
+      color: rgba($dark-color, 0.7);
+      z-index: 0;
+    }
+  }
 
-      & span {
-        text-transform: uppercase;
-        color: darken($light-color, 25%);
-        margin-right: 0.3rem;
+  .characters {
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem auto;
+
+    .character {
+      margin-bottom: 0.3rem;
+      position: relative;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &__emblem {
+        width: 100%;
+      }
+
+      &__class {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        margin-left: 20%;
+        height: 100%;
+        justify-content: center;
+
+        &--classType {
+          margin-top: -0.3rem;
+          font-size: 1.2rem;
+          @include text-stroke;
+        }
+      }
+
+      &__raceAndGender {
+        margin-top: 0.2rem;
+
+        &--genderType,
+        &--raceType {
+          color: darken($light-color, 25%);
+          @include text-stroke;
+        }
+
+        &--genderType {
+          margin-left: 0.3rem;
+        }
+      }
+
+      &__power {
+        position: absolute;
+        top: 0;
+        right: 0;
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        margin-right: 4%;
+        height: 100%;
+        justify-content: center;
+
+        &--power {
+          margin-top: -0.3rem;
+          font-size: 1.2rem;
+          color: rgb(54, 199, 209);
+          @include text-stroke;
+
+          &::before {
+            content: '\2727';
+            font-size: 0.8rem;
+            vertical-align: top;
+            margin-right: 0.1rem;
+          }
+        }
+
+        &--level {
+          margin-top: 0.2rem;
+          @include text-stroke;
+        }
       }
     }
   }
 
-  &__platform {
-    font-size: 3rem;
-    color: rgba($dark-color, 0.7);
-    z-index: 0;
+  @include media-md {
+    .characters {
+      .character {
+        font-size: 1.2rem;
+        &__class {
+          &--classType {
+            font-size: 1.8rem;
+          }
+        }
+        &__power {
+          &--power {
+            font-size: 1.8rem;
+          }
+        }
+      }
+    }
+  }
+
+  @include media-lg {
+    .characters {
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0.5rem;
+
+      .character {
+        font-size: 1rem;
+        &__class {
+          &--classType {
+            font-size: 1.2rem;
+          }
+        }
+        &__power {
+          &--power {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-lg {
+  .profile {
+    .profileStats {
+      max-width: 1000px;
+    }
   }
 }
 
@@ -60,39 +195,53 @@
   max-width: 600px;
   display: flex;
   align-items: center;
+  margin-top: 1rem;
+  border-bottom: 1px solid darken($light-color, 50%);
 
   .statsDisplay {
     margin-left: auto;
     margin-top: 0.5rem;
     font-size: 0.8rem;
     color: $light-color;
-    border-bottom: 2px solid $accent-color;
     text-transform: uppercase;
     padding: 0.2rem;
     cursor: pointer;
   }
 }
 
+@include media-lg {
+  .statsSection {
+    max-width: 1000px;
+  }
+}
+
 .statsHeader {
   max-width: 600px;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
   font-family: 'Oswald', sans-serif;
   font-size: 1.6rem;
   letter-spacing: 0.15rem;
   text-transform: uppercase;
   color: $light-color;
   font-weight: 200;
-  max-width: 600px;
   text-align: left;
+  align-self: flex-start;
+}
+
+@include media-lg {
+  .statsHeader {
+    max-width: 1000px;
+    font-size: 2.5rem;
+  }
 }
 
 .profileHighlights {
+  margin-top: 1rem;
   width: 100%;
   max-width: 600px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 0.5rem;
+  margin-bottom: 1rem;
 
   &__box {
     position: relative;
@@ -175,101 +324,10 @@
   }
 }
 
-.characters {
-  width: 100%;
-  max-width: 600px;
-
-  .character {
-    margin-bottom: 0.3rem;
-    position: relative;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &__emblem {
-      width: 100%;
-    }
-
-    &__class {
-      position: absolute;
-      top: 0;
-      left: 0;
-      display: flex;
-      flex-direction: column;
-      margin-left: 20%;
-      height: 100%;
-      justify-content: center;
-
-      &--classType {
-        margin-top: -0.3rem;
-        font-size: 1.2rem;
-        @include text-stroke;
-      }
-    }
-
-    &__raceAndGender {
-      margin-top: 0.2rem;
-
-      &--genderType,
-      &--raceType {
-        color: darken($light-color, 25%);
-        @include text-stroke;
-      }
-
-      &--genderType {
-        margin-left: 0.3rem;
-      }
-    }
-
-    &__power {
-      position: absolute;
-      top: 0;
-      right: 0;
-      text-align: right;
-      display: flex;
-      flex-direction: column;
-      margin-right: 4%;
-      height: 100%;
-      justify-content: center;
-
-      &--power {
-        margin-top: -0.3rem;
-        font-size: 1.2rem;
-        color: rgb(54, 199, 209);
-        @include text-stroke;
-
-        &::before {
-          content: '\2727';
-          font-size: 0.8rem;
-          vertical-align: top;
-          margin-right: 0.1rem;
-        }
-      }
-
-      &--level {
-        margin-top: 0.2rem;
-        @include text-stroke;
-      }
-    }
-  }
-}
-
-@include media-md {
-  .characters {
-    .character {
-      font-size: 1.2rem;
-      &__class {
-        &--classType {
-          font-size: 1.8rem;
-        }
-      }
-      &__power {
-        &--power {
-          font-size: 1.8rem;
-        }
-      }
-    }
+@include media-lg {
+  .profileHighlights {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 1000px;
   }
 }
 
@@ -285,10 +343,6 @@
     font-weight: 200;
     margin-top: 1rem;
     margin-bottom: 0.3rem;
-
-    &:first-of-type {
-      margin-top: 0;
-    }
   }
 
   .pvpStatsGroup {
@@ -306,7 +360,7 @@
   .statsGroup {
     width: 100%;
     padding: 0.5rem;
-    border-radius: 5px;
+    border-radius: 0 4px 4px 0;
     background: #fff;
     color: $dark-color;
 
@@ -342,6 +396,34 @@
           font-size: 0.9rem;
         }
       }
+    }
+  }
+}
+
+@include media-lg {
+  .stats {
+    &__heading {
+      margin-top: 0.5rem;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    grid-gap: 0 1rem;
+
+    &__general {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
+
+    &__weapons {
+      grid-column: 2 / 3;
+      grid-row: 1 / 3;
+    }
+
+    &__killsDeaths {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
     }
   }
 }

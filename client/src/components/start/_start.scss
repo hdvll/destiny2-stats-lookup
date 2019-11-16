@@ -15,6 +15,8 @@
 }
 
 .divider {
+  width: 100%;
+  max-width: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +30,7 @@
   &__text {
     font-weight: 700;
     font-size: 1.4rem;
-    margin: 1rem 0.5rem;
+    margin: 1.5rem 0.5rem;
     text-align: center;
   }
 }
