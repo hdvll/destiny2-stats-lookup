@@ -1,6 +1,6 @@
 {
   "name": "destiny2-stats",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Destiny 2 Stats viewer based on the API provided by Bungie",
   "main": "server.js",
   "scripts": {
